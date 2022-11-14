@@ -23,6 +23,7 @@ public class GetApiAutomate {
                     //to get the 1st value of any attribute present in data[] array
                     .body("data.email[0]",Matchers.equalTo("michael.lawson@reqres.in"))
                     .body("data.first_name",Matchers.hasItem("Michael"))
+                    .body("data.last_name",Matchers.hasItem("Lawson"))
 
                     //to assert for the size of any array
                     .body("data.size",Matchers.equalTo(6));
