@@ -1,3 +1,4 @@
+import io.restassured.response.Response;
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 import org.testng.annotations.Test;
@@ -8,8 +9,9 @@ import static org.hamcrest.core.IsEqual.equalTo;
 public class GetApiAutomate {
 
     @Test
-    public void getUsersList(){
-        given()
+    public void getUsersListAndExtractResponse(){
+        //Response is an interface from restAssured
+        Response res = given()
             .param("page","2")
                 .when()
                    .get("https://reqres.in/api/users?page=2")
@@ -26,6 +28,12 @@ public class GetApiAutomate {
                     .body("data.last_name",Matchers.hasItem("Lawson"))
 
                     //to assert for the size of any array
-                    .body("data.size",Matchers.equalTo(6));
+                    .body("data.size",Matchers.equalTo(6))
+                    .extract()
+                //return type of this method is responseOptions
+                    .response();
+        //Whatever response extracted from here will be assigned to object created and that obj can be used
+        System.out.println("Response = " + res.asString());
+
     }
 }
