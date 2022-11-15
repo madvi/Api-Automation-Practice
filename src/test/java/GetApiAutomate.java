@@ -1,9 +1,12 @@
+import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
 
 public class GetApiAutomate {
@@ -34,6 +37,16 @@ public class GetApiAutomate {
                     .response();
         //Whatever response extracted from here will be assigned to object created and that obj can be used
         System.out.println("Response = " + res.asString());
+
+        //To extract the single value from the response
+        //We need to get value from response using jsonpath or xmlpath, create an object to get the value
+        //need to pass response string while creating an object
+        JsonPath jsonPath = new JsonPath(res.asString());
+        System.out.println("Data name = " + jsonPath.getString("data[0].email"));
+
+        //to use hamcrest assertion library
+        //assertThat(res,equalTo("michael.lawson@reqres.in"));
+
 
     }
 }
